@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sticky Notes " />
+    <title>Sticky Notes</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #header h1 {
+        margin: 0;
+      }
+
+      ul#note-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 20px;
+      }
+
+      .note {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        min-height: 150px;
+      }
+
+      .note h2,
+      .note p {
+        margin: 0;
+        padding: 0;
+      }
+
+      .note-actions {
+        text-align: right;
+        margin-top: 10px;
+      }
+
+      .delete-note {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: red;
+      }
+
+      #add-note {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #add-note h2 {
+        margin-top: 0;
+      }
+
+      #note-title-input,
+      #note-content-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      #add-note-button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+    <title>Sticky Notes</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="shortcut icon" type="image/png" href="./img/notes.png" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div id="header">
+          <h1><i class="fas fa-sticky-note"></i> Sticky Notes</h1>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <ul id="note-list">
+        <li>
+          <div class="note">
+            <h2 contenteditable="true">Title #1</h2>
+            <p contenteditable="true">Text Content #1</p>
+            <div class="note-actions">
+              <button class="delete-note">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="note">
+            <h2 contenteditable="true">Title #2</h2>
+            <p contenteditable="true">Text Content #2</p>
+            <div class="note-actions">
+              <button class="delete-note">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </li>
+        <!-- Add more notes here -->
+      </ul>
+    </div>
+
+    <div class="container">
+      <div id="add-note">
+        <h2>Add Note</h2>
+        <input type="text" id="note-title-input" placeholder="Title" />
+        <textarea id="note-content-input" placeholder="Text Content"></textarea>
+        <button id="add-note-button">
+          <i class="fas fa-plus"></i> Add Note
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Get the required elements
+      const noteList = document.getElementById("note-list");
+      const addNoteButton = document.getElementById("add-note-button");
+      const noteTitleInput = document.getElementById("note-title-input");
+      const noteContentInput = document.getElementById("note-content-input");
+
+      // Add event listener to the add note button
+      addNoteButton.addEventListener("click", addNote);
+
+      // Function to add a new note
+      function addNote() {
+        // Get the note title and content from the inputs
+        const noteTitle = noteTitleInput.value;
+        const noteContent = noteContentInput.value;
+
+        if (noteTitle.trim() === "" || noteContent.trim() === "") {
+          alert("Please enter a title and content for the note.");
+          return;
+        }
+
+        // Create a new note element
+        const noteElement = document.createElement("li");
+        noteElement.innerHTML = `
+        <div class="note">
+            <h2 contenteditable="true">${noteTitle}</h2>
+            <p contenteditable="true">${noteContent}</p>
+            <div class="note-actions">
+                <button class="delete-note"><i class="fas fa-trash-alt"></i></button>
+            </div>
+        </div>
+    `;
+
+        // Append the note element to the note list
+        noteList.appendChild(noteElement);
+
+        // Clear the inputs
+        noteTitleInput.value = "";
+        noteContentInput.value = "";
+
+        // Add event listener to the delete note button
+        const deleteButton = noteElement.querySelector(".delete-note");
+        deleteButton.addEventListener("click", () => {
+          noteElement.remove();
+        });
+      }
+    </script>
+  </body>
+</html>
